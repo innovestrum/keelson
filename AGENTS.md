@@ -44,16 +44,18 @@ establisher carries into client repos.
 - **`marketplace.json` uses a `url` source object**, not the bare string `"."` — older
   Claude Code versions reject `"."` with *"source type … your Claude Code version does
   not support"*.
-- **`plugin.json` omits `version` on purpose.** For a git/url source Claude Code then
-  uses the **commit SHA** as the version, so every push to `main` is a new version and
-  reaches users. **Don't pin a `version` while iterating** — an unchanged version *is*
-  the update cache key, so new commits stay invisible to anyone already installed (they
-  keep the cached copy, e.g. a stale single-round establisher). Pin a semver only at a
-  deliberate release, and bump it every change thereafter.
+- **Bump `plugin.json` `version` (semver) on every release — it is the update signal.**
+  Claude Code keys updates on the version string: an unchanged version means installed
+  users keep the cached copy (the stale single-round establisher we hit). Omitting
+  `version` (commit-SHA versioning) is documented but proved unreliable in practice —
+  pin an explicit semver and **bump it every change**, so the new value out-ranks what
+  users have installed.
+- **Cut a matching `vX.Y.Z` git tag + GitHub release** per version. Release hygiene, and
+  it gives an anchor if the marketplace source is ever pinned to a ref/release channel.
 - **Updates are manual** on a third-party marketplace (auto-update is off by default):
   `/plugin marketplace update keelson` then `/plugin update keelson`. Cache lives at
   `~/.claude/plugins/cache/<marketplace>/<plugin>/<version>/`; if an update won't take,
-  uninstall + reinstall forces a clean fetch.
+  `/plugin uninstall keelson` + reinstall forces a clean fetch.
 
 ## When changing the lifecycle pack
 
