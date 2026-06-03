@@ -21,6 +21,17 @@ flowchart LR
 
 **Tactical autonomy** — the agent just does the mechanical moves (claim the issue, branch, code + doc + test, open the change, move status). **Strategic human loop** — it escalates the moment a move touches the original design, plan, or strategy. That balance is the whole point: momentum on the mechanical, a human gate on the consequential.
 
+```mermaid
+flowchart LR
+  M([a move in the loop]) --> Q{touches the original<br/>design, plan, or strategy?}
+  Q -- no --> A[agent just does it — tactical autonomy]
+  Q -- yes --> H[escalate to the human — strategic loop]
+  classDef agent fill:#e8eef7,stroke:#33415c,color:#0b1324;
+  classDef human fill:#f7e9d0,stroke:#8a5a16,color:#241a0b;
+  class A agent
+  class H human
+```
+
 It's **provider-neutral**. The skills name actions — *"create the issue", "open the change", "set status to `<column>`"* — and your agent runs whatever your tracker uses: GitHub, GitLab, Jira, Linear, or anything with an API/CLI/MCP. The only repo-specific values are filled from your interview answers.
 
 ## What you get
