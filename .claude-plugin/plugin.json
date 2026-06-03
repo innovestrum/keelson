@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "keelson",
-  "version": "0.2.0",
-  "description": "Establish a disciplined, issue-driven agentic operating model in any repo, against any tracker (GitHub, GitLab, Jira, Linear, or any API/CLI/MCP). One establisher skill interviews you, then writes a tracker-agnostic AGENTS.md plus a selectable lifecycle skill-pack.",
+  "version": "0.3.0",
+  "description": "Establish a disciplined, issue-driven agentic operating model in any repo, against any tracker (GitHub, GitLab, Jira, Linear, or any API/CLI/MCP). The adopt-keelson skill interviews you and writes a tracker-agnostic AGENTS.md plus a selectable lifecycle skill-pack; the tune-gates skill establishes or refines the quality gates standalone.",
   "author": {
     "name": "InnoVestrum",
     "url": "https://github.com/innovestrum"

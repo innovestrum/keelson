@@ -83,11 +83,13 @@ Work groups under **{{milestone}}s**, worked in order. Each has an **exit criter
 met with evidence before the next opens. Don't pull future-{{milestone}} scope
 without recorded approval on the {{issue}}.
 
-## 8 · Gates <!-- keep the rows for adopted gates only -->
+## 8 · Gates <!-- keep the rows for adopted gates only; configured by the tune-gates skill -->
 
 Post-change verification beyond CI:
 - **`review-gate`** — after CI is green on a {{change}} that produced an artifact,
   review it against its spec; self-heal small drift, escalate structural.
+- **`source-change-gate`** — when the {{change}} edits `{{source_of_truth}}` itself,
+  realize it, confirm the intended change, escalate collateral drift to other elements.
 - **`source-sync-gate`** — check `{{source_of_truth}}` and its implementation haven't
   drifted.
 - **`parity-gate`** — at {{milestone}} close, check `{{targets}}` stay equivalent.

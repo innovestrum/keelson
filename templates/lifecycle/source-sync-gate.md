@@ -5,8 +5,9 @@ description: >-
   implementation of a canonical {{source_of_truth}} (design tokens, a schema/spec, an
   i18n source). Pairs that implementation against a fresh view of the source and resolves
   drift: self-heals small slips, escalates structural mismatch — never edits the source.
-  No-op when the diff touches no such implementation. Differs from review-gate (spec →
-  implementation against acceptance) and parity-gate ({{target}} ↔ {{target}}).
+  No-op when the diff touches no such implementation. Differs from source-change-gate (the
+  source *itself* changed), review-gate (spec → implementation against acceptance), and
+  parity-gate ({{target}} ↔ {{target}}).
 ---
 
 The {{source_of_truth}} is canonical; the diff is one implementation of it. CI green
@@ -58,8 +59,10 @@ states present and named, same shapes and constraints, same meaning.
 Self-heal authority is implementation nudges only — **never edit the {{source_of_truth}}
 from this gate**; source changes go through update-source-of-truth.
 
-*Boundary:* canonical-source ↔ implementation, one {{change}}. Spec → implementation
-against acceptance is `review-gate`; {{target}} ↔ {{target}} equivalence is `parity-gate`.
+*Boundary:* canonical-source ↔ implementation, one {{change}}. The **source itself
+changing** (realize it, catch collateral drift) is `source-change-gate`; spec →
+implementation against acceptance is `review-gate`; {{target}} ↔ {{target}} equivalence is
+`parity-gate`.
 
 *(How to take a current view of the source, and where its build output lands, is in
 `AGENTS.md` → source conventions — name the action here, run the repo's own commands

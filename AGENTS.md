@@ -1,12 +1,13 @@
 # AGENTS.md — working on keelson itself
 
 keelson ports one repo's disciplined, issue-driven agentic flow into a portable,
-**tracker-agnostic** skill any repo can adopt. It ships as a single skill — the
-**establisher** (`skills/establish/SKILL.md`) — which interviews the user and fills
-provider-neutral templates into their repo: a questionnaire-organized client
-`AGENTS.md` plus a selectable lifecycle skill-pack. This file governs work **on
-keelson**; it is not the template the establisher writes (that is
-`skills/establish/templates/AGENTS.client.md`).
+**tracker-agnostic** pack any repo can adopt. It ships **two skills**:
+**`adopt-keelson`** (the establisher — interviews the user and writes the whole operating
+model) and **`tune-gates`** (establishes or refines just the quality-gate layer, standalone;
+`adopt-keelson` defers its gate pillar to it). Both fill provider-neutral templates into the
+target repo: a questionnaire-organized client `AGENTS.md` plus a selectable lifecycle
+skill-pack. This file governs work **on keelson**; it is not the template the skills write
+(that is `templates/AGENTS.client.md`).
 
 ## The golden rule (holds for every file here)
 
@@ -20,11 +21,18 @@ establisher carries into client repos.
 
 ## How the pieces fit
 
-- **One skill, self-contained.** Everything the establisher needs at runtime lives
-  **inside `skills/establish/`** (templates, `references/tracker-notes.md`, Codex
-  metadata). A plugin ships the skill folder, not the repo root — so nothing the
-  skill reads may live in `docs/` or rely on a repo-root file. Root files
-  (`README.md`, this `AGENTS.md`, `LICENSE`, packaging) are repo docs only.
+- **Two skills, one shared template set.** The lifecycle templates + tracker notes are read
+  by **both** skills, so they live **once** at the plugin root — `templates/`
+  (`AGENTS.client.md` + `lifecycle/*.md`) and `references/tracker-notes.md` — and each skill
+  folder symlinks them in (`skills/<skill>/templates → ../../templates`, same for
+  `references`). A skill reads `templates/lifecycle/<name>.md` as if local, the source keeps
+  one copy (no drift), and each folder stays a portable self-contained unit. Don't add a
+  second copy of a template inside a skill folder.
+- **`adopt-keelson` owns the full model; `tune-gates` owns the gates.** The gate rounds, the
+  which-gate-when selection, and the four gate templates (`review-gate`, `source-change-gate`,
+  `source-sync-gate`, `parity-gate`) are `tune-gates`'. `adopt-keelson` points its gate pillar
+  (P6/O2) there rather than re-deriving the rules — change gate logic in `tune-gates`, not in
+  both.
 - **Templates are plain language with `{{placeholders}}`.** Name the action
   ("create the issue", "open the change", "set status to `<column>`"); never
   hardcode `gh`/`glab`/a tracker's commands. The only `{{placeholders}}` are repo
@@ -34,10 +42,11 @@ establisher carries into client repos.
 - **Tracker specifics live once**, in `references/tracker-notes.md` — traps,
   bindings, endpoints only. The establisher folds the chosen section into the
   client `AGENTS.md`.
-- **Dual delivery, single copy.** Canonical skill at `skills/establish/` (Claude
-  plugin reads it directly); `.agents/skills/establish` is a symlink to it (Codex
-  follows symlinks — documented; Claude's symlink-following is not, so the real
-  directory is on the Claude side).
+- **Dual delivery, single copy.** Claude installs the whole plugin to its cache (in-plugin
+  symlinks are preserved/dereferenced, so each skill resolves its `templates/`); Codex
+  discovers each skill under `.agents/skills/<skill>` — a symlink to the real `skills/<skill>/`
+  (Codex follows the nested `templates` symlink within the clone). Root files (`README.md`,
+  this `AGENTS.md`, `LICENSE`, packaging) are repo docs only.
 
 ## Distribution & updates (read before "fixing" an install)
 
@@ -62,6 +71,11 @@ establisher carries into client repos.
 - Keep each template a **thin** port of its cruiso origin — the discipline, not the
   Cruiso-specific detail. If a placeholder isn't a repo convention, it doesn't
   belong; push tracker mechanics to `tracker-notes.md`.
-- The 16 ideas are **selectable**: a client may adopt the 7 core-loop skills and
+- The 17 ideas are **selectable**: a client may adopt the 7 core-loop skills and
   none of the gates. Each template must read sensibly on its own and defer to the
   client `AGENTS.md` for anything configurable.
+- **The four gates are a family** — `review-gate` (spec → implementation),
+  `source-change-gate` (the source itself changed; ported from cruiso `design-visual-gate`),
+  `source-sync-gate` (source ↔ implementation), `parity-gate` (`{{target}}` ↔ `{{target}}`).
+  Each template's boundary footer says which pair it is *not* — keep those in sync when you
+  touch one. Gate **selection** logic belongs in `tune-gates`, not the templates.

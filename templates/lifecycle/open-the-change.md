@@ -37,10 +37,10 @@ notes — name the action here, run them there.
   too. Never report "done" while checks are pending or red.
 
 ## Gate, then flip
-- CI green and the {{change}} produced a reviewable artifact → chain into **review-gate**
-  before the recap; if it touched `{{source_of_truth}}`, also **source-sync-gate**. A
-  self-heal the gate pushes re-triggers CI — re-watch and re-enter until findings settle.
-  No artifact / pure logic → skip.
+- CI green → chain the adopted gates before the recap: a reviewable artifact → **review-gate**;
+  the {{change}} **edits `{{source_of_truth}}` itself** → **source-change-gate**; it touches an
+  **implementation of `{{source_of_truth}}`** → **source-sync-gate**. A self-heal a gate pushes
+  re-triggers CI — re-watch and re-enter until findings settle. No artifact / pure logic → skip.
 - Set `{{status_field}}` → **{{status.in_review}}** when the {{change}} opens (or
   **{{status.in_progress}}** if that's where your board parks open changes) via
   track-status.

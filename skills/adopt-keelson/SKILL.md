@@ -1,15 +1,16 @@
 ---
-name: establish
+name: adopt-keelson
 description: >-
-  Establish keelson's issue-driven agentic operating model in this repo. Runs a
+  Adopt keelson's issue-driven agentic operating model in this repo. Runs a
   deliberate, multi-round interview (≈8–20 rounds: it maps your SDLC, then makes you
   decide each pillar), then writes a tracker-agnostic client AGENTS.md plus the selected
   lifecycle skills — provider-neutral across GitHub, GitLab, Jira, Linear, or any
-  API/CLI/MCP. Trigger on "adopt keelson", "set up the agentic workflow", "establish the
-  issue-driven flow", or a repo that wants an AGENTS.md.
+  API/CLI/MCP. The gate pillar defers to the tune-gates skill (run it standalone later to
+  add/tune a gate). Trigger on "adopt keelson", "set up the agentic workflow", "establish
+  the issue-driven flow", or a repo that wants an AGENTS.md.
 ---
 
-# Establish keelson
+# Adopt keelson
 
 Port a disciplined, issue-driven flow — **frame → plan → implement → open-change → gate
 → close**, with *tactical autonomy* (the agent does the mechanical moves) and a
@@ -72,8 +73,8 @@ for a complex one.
   together? never hardcode (surface in config)? scope limited to the {{issue}}?
 - **P5 · Opening changes** (`open-the-change`) — `{{change_title_format}}`, link the
   {{issue}} in the body, `{{size_cap}}` + `{{oversize_label}}`, self-review.
-- **P6 · Quality gates** — `{{quality_gates}}`; CI-owned (don't pre-run before opening),
-  with a local-verify carve-out during red-CI debugging.
+- **P6 · CI quality gates** (via **tune-gates** G1) — `{{quality_gates}}`; CI-owned (don't
+  pre-run before opening), with a local-verify carve-out during red-CI debugging.
 - **P7 · Status flow** (`track-status`) — when status moves and who moves it; board vs.
   labels as source of truth; close only with cited evidence.
 - **P8 · Pick-up rule** (`pick-next-work`) — the backlog/priority ordering for claiming
@@ -82,8 +83,10 @@ for a complex one.
 **Optional families — propose only what D1 surfaced; adopt or skip with the user**
 - **O1 · Milestones / releases** (`close-a-milestone`) — stages / milestones / epics /
   sprints with exit criteria? release model? → `{{milestone}}`.
-- **O2 · Verification gates** — a reviewable artifact → `review-gate`; a canonical
-  `{{source_of_truth}}` → `source-sync-gate`; multiple `{{targets}}` → `parity-gate`.
+- **O2 · Verification gates** (via **tune-gates** G2) — a reviewable artifact → `review-gate`;
+  a canonical `{{source_of_truth}}` → the `source-change-gate` + `source-sync-gate` pair;
+  multiple `{{targets}}` → `parity-gate`. tune-gates owns the gate rounds, selection rules, and
+  templates — run it for this pillar; it returns the adopted set for the unified write (§4).
 - **O3 · Doc consistency & source updates** — `sync-docs` (reconcile after batches) and
   `update-source-of-truth` (flow a source-of-truth change through the loop).
 
@@ -129,7 +132,8 @@ leave none unfilled.
    `## Tracker notes`. Write to repo root (or merge into the existing file).
 2. **Lifecycle skills.** For each adopted idea, render `templates/lifecycle/<name>.md`
    (placeholders + frontmatter description) and write it to each client skill dir as
-   `<dir>/<name>/SKILL.md`.
+   `<dir>/<name>/SKILL.md`. The **gate** skills + the `§8`/`§3` substrate follow
+   **tune-gates §4** — its selection (P6/O2) decides which gates are adopted; render only those.
 3. Skipped ideas → don't write the skill, don't leave its `AGENTS.md` section.
 
 ## 5 · Verify & hand back
@@ -145,9 +149,11 @@ leave none unfilled.
 - **Make the user decide; don't auto-default the consequential calls.** Vocabulary,
   status columns, where plans and docs live, the tactical/strategic line — these are the
   user's to set. A silently-defaulted `AGENTS.md` is one nobody agreed to.
-- **The pack is selectable.** Write only adopted ideas; a backend repo with no canonical
-  source and one target skips the source/parity gates entirely — never write a
-  `source-sync-gate` with `{{source_of_truth}} = none`.
+- **The pack is selectable, gates most of all.** Write only adopted ideas; a backend repo
+  with no canonical source and one target skips the source + parity gates entirely. The gate
+  selection rules — and the "never write a gate with a null binding" trap (no
+  source-change/source-sync-gate when `{{source_of_truth}}` is *none*; no parity for one
+  `{{target}}`) — live in **tune-gates**; apply them, don't re-derive them here.
 - **Don't transcribe a tracker's commands into the skills.** Name the action; the
   bindings live once, in `AGENTS.md → Tracker notes`. About to write `gh`/`glab` into a
   skill? Stop — push it to the tracker note.
