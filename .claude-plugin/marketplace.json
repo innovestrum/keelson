@@ -7,7 +7,10 @@
   "plugins": [
     {
       "name": "keelson",
-      "source": ".",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/innovestrum/keelson.git"
+      },
       "description": "Port a disciplined, issue-driven agentic flow into any repo and any project-management tracker. Establisher skill + portable lifecycle pack.",
       "license": "MIT",
       "keywords": ["agentic-workflow", "issue-driven", "tracker-agnostic", "agents-md"]
