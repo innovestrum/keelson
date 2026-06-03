@@ -39,6 +39,22 @@ establisher carries into client repos.
   follows symlinks — documented; Claude's symlink-following is not, so the real
   directory is on the Claude side).
 
+## Distribution & updates (read before "fixing" an install)
+
+- **`marketplace.json` uses a `url` source object**, not the bare string `"."` — older
+  Claude Code versions reject `"."` with *"source type … your Claude Code version does
+  not support"*.
+- **`plugin.json` omits `version` on purpose.** For a git/url source Claude Code then
+  uses the **commit SHA** as the version, so every push to `main` is a new version and
+  reaches users. **Don't pin a `version` while iterating** — an unchanged version *is*
+  the update cache key, so new commits stay invisible to anyone already installed (they
+  keep the cached copy, e.g. a stale single-round establisher). Pin a semver only at a
+  deliberate release, and bump it every change thereafter.
+- **Updates are manual** on a third-party marketplace (auto-update is off by default):
+  `/plugin marketplace update keelson` then `/plugin update keelson`. Cache lives at
+  `~/.claude/plugins/cache/<marketplace>/<plugin>/<version>/`; if an update won't take,
+  uninstall + reinstall forces a clean fetch.
+
 ## When changing the lifecycle pack
 
 - Keep each template a **thin** port of its cruiso origin — the discipline, not the

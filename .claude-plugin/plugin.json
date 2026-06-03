@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "keelson",
-  "version": "0.1.0",
   "description": "Establish a disciplined, issue-driven agentic operating model in any repo, against any tracker (GitHub, GitLab, Jira, Linear, or any API/CLI/MCP). One establisher skill interviews you, then writes a tracker-agnostic AGENTS.md plus a selectable lifecycle skill-pack.",
   "author": {
     "name": "InnoVestrum",
