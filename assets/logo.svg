@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 240" width="740" height="240" role="img" aria-label="keelson — issue-driven agentic flow for any repo">
+  <title>keelson</title>
+  <desc>A ship's keelson: the reinforcing beam fastened over the keel that ties the frames together — the backbone an agentic workflow defers to.</desc>
+
+  <defs>
+    <linearGradient id="card" x1="0" y1="0" x2="0.65" y2="1">
+      <stop offset="0" stop-color="#1d2e51"/>
+      <stop offset="1" stop-color="#0f1c34"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e7b15a"/>
+      <stop offset="1" stop-color="#d8943a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.22" cy="0.18" r="0.9">
+      <stop offset="0" stop-color="#33508a" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#33508a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- card -->
+  <rect x="2" y="2" width="736" height="236" rx="22" fill="url(#card)"/>
+  <rect x="2" y="2" width="736" height="236" rx="22" fill="url(#glow)"/>
+  <rect x="2.5" y="2.5" width="735" height="235" rx="21.5" fill="none" stroke="#3a527f" stroke-opacity="0.55"/>
+
+  <!-- ===== mark: ship keel + keelson + frames (bow to the right) ===== -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- waterline -->
+    <line x1="70" y1="134" x2="266" y2="134" stroke="#7d93bf" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="2 7"/>
+
+    <!-- hull silhouette (keel = the bottom run) -->
+    <path d="M 92 96 L 96 150 C 122 166, 208 166, 234 150 C 244 144, 250 120, 252 96 C 212 90, 132 90, 92 96 Z"
+          stroke="#9fb6e0" stroke-width="3" fill="#22335a"/>
+
+    <!-- frames / ribs rising off the keelson -->
+    <g stroke="#cdd9ee" stroke-width="2.6" stroke-opacity="0.9">
+      <line x1="116" y1="151" x2="116" y2="95"/>
+      <line x1="144" y1="156" x2="144" y2="93"/>
+      <line x1="172" y1="158" x2="172" y2="92"/>
+      <line x1="200" y1="156" x2="200" y2="93"/>
+      <line x1="226" y1="151" x2="226" y2="95"/>
+    </g>
+
+    <!-- keelson: the reinforcing beam over the keel (the hero) -->
+    <path d="M 108 150 C 140 161, 200 161, 230 150" stroke="url(#beam)" stroke-width="8"/>
+  </g>
+
+  <!-- ===== wordmark ===== -->
+  <g font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text x="300" y="132" font-size="78" font-weight="700" letter-spacing="-1.5" fill="#f3f7fc">keelson</text>
+    <rect x="302" y="150" width="118" height="5" rx="2.5" fill="url(#beam)"/>
+    <text x="304" y="184" font-size="22" font-weight="500" letter-spacing="0.2" fill="#9fb2d0">issue-driven agentic flow — for any repo</text>
+  </g>
+</svg>

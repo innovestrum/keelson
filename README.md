@@ -1,4 +1,6 @@
-# keelson
+<p align="center">
+  <img src="assets/logo.svg" alt="keelson — issue-driven agentic flow for any repo" width="560">
+</p>
 
 > Port a disciplined, issue-driven agentic flow into **any repo**, against **any tracker**.
 
