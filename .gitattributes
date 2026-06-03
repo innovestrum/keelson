@@ -1,0 +1,2 @@
+# Normalize to LF in the repo; let Git auto-detect text vs binary.
+* text=auto eol=lf

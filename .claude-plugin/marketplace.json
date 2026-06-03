@@ -1,0 +1,16 @@
+{
+  "name": "keelson",
+  "owner": {
+    "name": "InnoVestrum",
+    "url": "https://github.com/innovestrum"
+  },
+  "plugins": [
+    {
+      "name": "keelson",
+      "source": ".",
+      "description": "Port a disciplined, issue-driven agentic flow into any repo and any project-management tracker. Establisher skill + portable lifecycle pack.",
+      "license": "MIT",
+      "keywords": ["agentic-workflow", "issue-driven", "tracker-agnostic", "agents-md"]
+    }
+  ]
+}
