@@ -52,8 +52,10 @@ planning → **{{status.planning}}**, work opens → **{{status.in_progress}}**,
 
 ## 5 · Docs & decisions
 
-- Source of truth for product/architecture/process: **`{{docs_root}}`**. A change
-  that alters behaviour updates the relevant doc **in the same {{change}}**.
+- **Doc system: {{docs_system}}** (in-repo / external wiki / mixed). Source of truth for
+  product/architecture/process lives at **`{{docs_root}}`**. A change that alters
+  behaviour updates the relevant doc **in the same {{change}}**.
+- **Plans are filed at {{plan_location}}** — reviewers and future-you read them there.
 - Non-trivial decisions (new framework/service, major library swap, divergence from a
   documented path) get an ADR in **`{{adr_dir}}`**, numbered monotonically; mark
   superseded ones.

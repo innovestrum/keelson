@@ -107,13 +107,13 @@ Then run `$establish` (or just ask: *"establish the agentic workflow"*). The sam
 
 ## Use
 
-Run the establisher and answer the interview — one short round per idea. It captures your conventions, then writes `AGENTS.md` and the skills you selected. **Read the new `AGENTS.md` first**; it's the briefing everything else defers to.
+Run the establisher and work through the interview — a **deliberate, multi-round** session (≈8–20 rounds) that first maps your SDLC, then makes *you* decide each pillar: vocabulary, where plans and docs live, the tactical-vs-strategic line, which gates apply. It then writes `AGENTS.md` and the skills you selected. **Read the new `AGENTS.md` first**; it's the briefing everything else defers to.
 
 ```mermaid
 %%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 40, "rankSpacing": 38}}}%%
 flowchart TD
   O([orient · tracker, tools,<br/>existing AGENTS.md]) --> Iv{{interview}}
-  Iv -. one round per idea .-> Iv
+  Iv -. ≈8–20 rounds · you decide .-> Iv
   Iv --> Fl[fill templates ·<br/>substitute your conventions]
   Fl --> W[write into your repo ·<br/>AGENTS.md + selected skills]
   W --> V[verify · no blanks left,<br/>skills match the substrate]
