@@ -1,0 +1,8 @@
+# Codex UI + invocation metadata for the establish skill (optional; SKILL.md is the source of truth).
+interface:
+  display_name: "Establish keelson"
+  short_description: "Interview-driven setup of an issue-driven agentic workflow for this repo and its tracker."
+policy:
+  # Establishing is a deliberate act, but a clear ask ("set up the agentic workflow") may trigger it.
+  allow_implicit_invocation: true
+# No tool dependencies: keelson is tracker-agnostic and uses whatever CLI/MCP the repo already has.
