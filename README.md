@@ -7,29 +7,44 @@ keelson is a single [Agent Skill](https://www.agensi.io/learn/agent-skills-open-
 It distills the flow a production repo uses to let AI agents ship safely:
 
 ```mermaid
-flowchart LR
-  F[frame] --> P[plan] --> I[implement] --> O[open change] --> G[gate] --> C[close]
+%%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 42, "rankSpacing": 40}}}%%
+flowchart TD
+  F([frame]) --> P[plan] --> I[implement] --> O[open change] --> G{{gate}} --> C([close])
   C -. next .-> F
-  P -. strategic call .-> H{{escalate to human}}
+  P -. strategic call .-> H[/escalate to human/]
   G -. structural drift .-> H
   H -. redirect .-> P
-  classDef loop fill:#e8eef7,stroke:#33415c,color:#0b1324;
-  classDef human fill:#f7e9d0,stroke:#8a5a16,color:#241a0b;
-  class F,P,I,O,G,C loop;
+  classDef step fill:#e8eef7,stroke:#33415c,color:#0b1324,stroke-width:1px;
+  classDef terminal fill:#d7e3f4,stroke:#2c4a73,color:#0b1324,stroke-width:1.5px;
+  classDef gate fill:#d6ece6,stroke:#2f6b53,color:#0b1f16,stroke-width:1.5px;
+  classDef human fill:#f7e9d0,stroke:#8a5a16,color:#241a0b,stroke-width:1.5px;
+  class P,I,O step;
+  class F,C terminal;
+  class G gate;
   class H human;
+  linkStyle 5 stroke:#2f6b53,stroke-width:1.5px,stroke-dasharray:4 3;
+  linkStyle 6,7,8 stroke:#8a5a16,stroke-width:1.5px,stroke-dasharray:4 3;
 ```
 
 **Tactical autonomy** — the agent just does the mechanical moves (claim the issue, branch, code + doc + test, open the change, move status). **Strategic human loop** — it escalates the moment a move touches the original design, plan, or strategy. That balance is the whole point: momentum on the mechanical, a human gate on the consequential.
 
 ```mermaid
-flowchart LR
+%%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 48, "rankSpacing": 40}}}%%
+flowchart TD
   M([a move in the loop]) --> Q{touches the original<br/>design, plan, or strategy?}
-  Q -- no --> A[agent just does it — tactical autonomy]
-  Q -- yes --> H[escalate to the human — strategic loop]
-  classDef agent fill:#e8eef7,stroke:#33415c,color:#0b1324;
-  classDef human fill:#f7e9d0,stroke:#8a5a16,color:#241a0b;
-  class A agent
-  class H human
+  Q -- no --> A[agent just does it<br/>· tactical autonomy ·]
+  Q -- yes --> H[escalate to the human<br/>· strategic loop ·]
+  classDef start fill:#eef1f6,stroke:#33415c,color:#0b1324,stroke-width:1px;
+  classDef decision fill:#ece8fb,stroke:#5b4b8a,color:#1e1633,stroke-width:1.5px;
+  classDef agent fill:#e8eef7,stroke:#33415c,color:#0b1324,stroke-width:1.5px;
+  classDef human fill:#f7e9d0,stroke:#8a5a16,color:#241a0b,stroke-width:1.5px;
+  class M start;
+  class Q decision;
+  class A agent;
+  class H human;
+  linkStyle 0 stroke:#33415c,stroke-width:1.5px;
+  linkStyle 1 stroke:#33415c,stroke-width:1.5px;
+  linkStyle 2 stroke:#8a5a16,stroke-width:1.5px;
 ```
 
 It's **provider-neutral**. The skills name actions — *"create the issue", "open the change", "set status to `<column>`"* — and your agent runs whatever your tracker uses: GitHub, GitLab, Jira, Linear, or anything with an API/CLI/MCP. The only repo-specific values are filled from your interview answers.
