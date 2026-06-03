@@ -14,8 +14,9 @@ rewrite.
 1. **Re-read the {{issue}} body and every doc it references.** The plan answers the
    acceptance criteria. If the body and a doc in `{{docs_root}}` disagree, resolve it via
    respond-to-uncertainty first.
-2. **Post a 3–7 bullet plan as a comment on the {{issue}}.** Each bullet is a concrete
-   move (area + what changes), not a restatement of the goal. Fewer than 3 → the
+2. **File a 3–7 bullet plan at `{{plan_location}}`** (an {{issue}} comment, a design doc,
+   a wiki page, or the {{change}} body — whatever the repo uses). Each bullet is a
+   concrete move (area + what changes), not a restatement of the goal. Fewer than 3 → the
    {{issue}} was over-scoped for one change; more than 7 → it should split.
 3. **Non-trivial call → ADR.** New dependency, a deviation from `{{source_of_truth}}`, a
    cross-cutting structural choice → author one in `{{adr_dir}}` marked *Proposed* and
@@ -37,6 +38,6 @@ rewrite.
    - Unsure which → treat as strategic and ask. The human loop is cheap; an unwound wrong
      direction is not.
 
-*(How to comment on the {{issue}}, open the `{{isolation}}`, and set status is in
-`AGENTS.md` → Tracker notes — name the action here, run the tracker's own commands
-there.)*
+*(Where `{{plan_location}}` lives and how to write to it, plus opening the `{{isolation}}`
+and setting status, are in `AGENTS.md` → Tracker notes — name the action here, run the
+repo's own commands there.)*
