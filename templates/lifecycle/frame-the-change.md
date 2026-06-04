@@ -1,10 +1,10 @@
 ---
 name: frame-the-change
 description: >-
-  Activate the moment the user asks for any change — "fix X", "add Y", "tweak Z", a
-  screenshot with a callout. Forms a tracked {{issue}} with a real plan before any
-  code. Distinct from pick-next-work (claims an existing {{issue}}) and plan-the-work
-  (plans the one this skill just created).
+  Activate the moment the user asks for any change — "fix X", "add Y", "tweak Z".
+  Forms a tracked {{issue}} with a real plan before any code. Distinct from
+  pick-next-work (claims an existing {{issue}}) and plan-the-work (plans the one this
+  skill just created).
 ---
 
 User asked for a change. No code yet. Drive the work from a tracked {{issue}}, not a
