@@ -2,7 +2,21 @@
   <img src="assets/logo.svg" alt="keelson — guardrails against AI agent spec-drift" width="560">
 </p>
 
-**AI agents drift.** They start on-spec, then quietly make a call that touches the original design, plan, or strategy — and you catch it at review, after merge, or once it has compounded across three more changes. keelson draws a hard line between the mechanical moves an agent should just make and the consequential ones it must hand back to you, so spec-drift surfaces the moment it happens — not three steps later.
+> [!WARNING]
+> **The problem — silent spec-drift.** An AI agent starts on-spec, then quietly makes a
+> call that touches the original **design, plan, or strategy**, and carries on as if nothing
+> happened. You catch it late — at review, after merge, or once it has **compounded across
+> three more changes** stacked on top of the drift. By then the cheap fix is gone.
+
+**What keelson does:** it draws a hard line between the moves an agent should just make and
+the ones it must hand back to you —
+
+- **Mechanical → the agent just does it.** Claim the issue, branch, code + doc + test, open
+  the change, move status.
+- **Consequential → escalate to the human.** Anything that touches the original design,
+  plan, or strategy.
+
+So spec-drift surfaces **the moment it happens — not three steps later.**
 
 > Port a disciplined, issue-driven agentic flow into **any repo**, against **any tracker**.
 
