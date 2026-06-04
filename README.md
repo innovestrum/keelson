@@ -1,6 +1,8 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="keelson — issue-driven agentic flow for any repo" width="560">
+  <img src="assets/logo.svg" alt="keelson — guardrails against AI agent spec-drift" width="560">
 </p>
+
+**AI agents drift.** They start on-spec, then quietly make a call that touches the original design, plan, or strategy — and you catch it at review, after merge, or once it has compounded across three more changes. keelson draws a hard line between the mechanical moves an agent should just make and the consequential ones it must hand back to you, so spec-drift surfaces the moment it happens — not three steps later.
 
 > Port a disciplined, issue-driven agentic flow into **any repo**, against **any tracker**.
 
@@ -31,6 +33,8 @@ flowchart TD
   linkStyle 7 stroke:#2f6b4f,stroke-width:1.5px,stroke-dasharray:4 3;
   linkStyle 8,9,10 stroke:#8a5a16,stroke-width:1.5px,stroke-dasharray:4 3;
 ```
+
+## Tactical autonomy, human-in-the-loop on drift
 
 **Tactical autonomy** — the agent just does the mechanical moves (claim the issue, branch, code + doc + test, open the change, move status). **Strategic human loop** — it escalates the moment a move touches the original design, plan, or strategy. That balance is the whole point: momentum on the mechanical, a human gate on the consequential.
 

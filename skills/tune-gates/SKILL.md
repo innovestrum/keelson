@@ -97,6 +97,11 @@ Before proposing, learn — don't prescribe:
 - **The source pair travels together.** source-change-gate (the source itself moved) and
   source-sync-gate (source ↔ implementation) are two arms of one loop — adopting only one
   leaves a blind spot; say so.
+- **Stacked judgment gates aren't independent.** review/source-change/source-sync are model
+  judgments — two on the same model + context share a blind spot, so drift that slips the
+  implementer can slip the review too. They don't multiply like independent checks; the
+  strategic-loop escalation (a move touches design → stop, ask) is the non-judgment backstop
+  for the misses they'd both wave through.
 - **Don't transcribe CI or tracker commands into the gate skills.** The gates *name* actions;
   how to realize the source, fetch a CI artifact, or open a follow-up live once in
   `AGENTS.md` (→ source conventions / Tracker notes). About to write `gh`/a build command into
