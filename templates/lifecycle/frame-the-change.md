@@ -1,8 +1,9 @@
 ---
 name: frame-the-change
 description: >-
-  Activate the moment the user asks for any change — "fix X", "add Y", "tweak Z".
-  Forms a tracked {{issue}} with a real plan before any code. Distinct from
+  Activate the moment the user asks for any change — "fix X", "add Y", "tweak Z", or
+  anything similar in intent. Forms a tracked {{issue}} with a real plan before any
+  code. Distinct from
   pick-next-work (claims an existing {{issue}}) and plan-the-work (plans the one this
   skill just created).
 ---
