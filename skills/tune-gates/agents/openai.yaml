@@ -1,0 +1,8 @@
+# Codex UI + invocation metadata for the tune-gates skill (optional; SKILL.md is the source of truth).
+interface:
+  display_name: "Tune gates (keelson)"
+  short_description: "Establish or refine a repo's CI quality gates and verification gates, independently of the full adopt-keelson interview."
+policy:
+  # A clear ask ("set up the quality gates", "add a gate", "tune the gates") may trigger it.
+  allow_implicit_invocation: true
+# No tool dependencies: the gates name actions; they run whatever CI/CLI/MCP the repo already has.

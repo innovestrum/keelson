@@ -1,8 +1,8 @@
-# Codex UI + invocation metadata for the establish skill (optional; SKILL.md is the source of truth).
+# Codex UI + invocation metadata for the adopt-keelson skill (optional; SKILL.md is the source of truth).
 interface:
-  display_name: "Establish keelson"
+  display_name: "Adopt keelson"
   short_description: "Interview-driven setup of an issue-driven agentic workflow for this repo and its tracker."
 policy:
-  # Establishing is a deliberate act, but a clear ask ("set up the agentic workflow") may trigger it.
+  # Adopting is a deliberate act, but a clear ask ("set up the agentic workflow") may trigger it.
   allow_implicit_invocation: true
 # No tool dependencies: keelson is tracker-agnostic and uses whatever CLI/MCP the repo already has.

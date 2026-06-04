@@ -4,7 +4,7 @@
 
 > Port a disciplined, issue-driven agentic flow into **any repo**, against **any tracker**.
 
-keelson is a single [Agent Skill](https://www.agensi.io/learn/agent-skills-open-standard) — the **establisher** — that interviews you and writes a tracker-agnostic operating model into your repo: a questionnaire-organized `AGENTS.md` plus a *selectable* lifecycle skill-pack.
+keelson is a pair of [Agent Skills](https://www.agensi.io/learn/agent-skills-open-standard) — **`adopt-keelson`**, which interviews you and writes a tracker-agnostic operating model into your repo (a questionnaire-organized `AGENTS.md` plus a *selectable* lifecycle skill-pack), and **`tune-gates`**, which establishes or refines just the quality gates, standalone.
 
 It distills the flow a production repo uses to let AI agents ship safely:
 
@@ -57,7 +57,7 @@ It's **provider-neutral**. The skills name actions — *"create the issue", "ope
 
 ## What you get
 
-The establisher writes two things into your repo:
+`adopt-keelson` writes two things into your repo:
 
 1. **`AGENTS.md`** — the substrate every skill defers to: your vocabulary, branch/change rules, status columns, the InnoVestrum engineering standards, and the chosen tracker's traps folded in under *Tracker notes*.
 2. **A lifecycle pack** — the ideas you pick (below), written as your repo's own skills in plain language.
@@ -67,9 +67,9 @@ Thin templates plus your interview answers become your repo's own artifacts:
 ```mermaid
 %%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 40, "rankSpacing": 44}}}%%
 flowchart TD
-  T[keelson templates<br/>AGENTS substrate · 16 lifecycle · tracker-notes]
+  T[keelson templates<br/>AGENTS substrate · 17 lifecycle · tracker-notes]
   A[/your answers ·<br/>one round per idea/]
-  T --> E(((establish)))
+  T --> E(((adopt-keelson)))
   A --> E
   E --> G[your AGENTS.md<br/>substrate + standards + tracker notes]
   E --> L[your selected skills<br/>plain-language, defer to AGENTS.md]
@@ -94,18 +94,19 @@ flowchart TD
 /plugin install keelson
 ```
 
-Then run `/keelson:establish`.
+Then run `/keelson:adopt-keelson` (or `/keelson:tune-gates` to set up just the gates).
 
 ### Codex / any SKILL.md-aware agent (Agent Skill)
 
-The skill is discovered under [`.agents/skills/`](https://developers.openai.com/codex/skills). Vendor it once at user level so it's available in every repo:
+The skills are discovered under [`.agents/skills/`](https://developers.openai.com/codex/skills). Vendor them once at user level so they're available in every repo:
 
 ```sh
 git clone https://github.com/innovestrum/keelson
-ln -s "$PWD/keelson/skills/establish" ~/.agents/skills/establish   # Codex follows symlinks
+ln -s "$PWD/keelson/skills/adopt-keelson" ~/.agents/skills/adopt-keelson   # Codex follows symlinks
+ln -s "$PWD/keelson/skills/tune-gates"    ~/.agents/skills/tune-gates      # each folder symlinks the shared templates/
 ```
 
-Then run `$establish` (or just ask: *"establish the agentic workflow"*). The same path works for Gemini CLI, Copilot, Cursor, and other SKILL.md adopters.
+Then run `$adopt-keelson` (or just ask: *"establish the agentic workflow"*). The same path works for Gemini CLI, Copilot, Cursor, and other SKILL.md adopters.
 
 ## Use
 
@@ -129,52 +130,86 @@ flowchart TD
   linkStyle 1 stroke:#8a5a16,stroke-width:1.5px,stroke-dasharray:4 3;
 ```
 
-## The 16 ideas (selectable)
+## The 17 ideas (selectable)
 
 | | Core loop *(default on)* | Discipline *(default on)* | Milestone & gates *(by repo shape)* |
 |---|---|---|---|
 | | `frame-the-change` | `respond-to-uncertainty` | `close-a-milestone` |
 | | `pick-next-work` | `carve-out-followup` | `review-gate` |
-| | `plan-the-work` | `check-prior-art` | `source-sync-gate` |
-| | `implement-the-change` | `automate-or-runbook` | `parity-gate` |
-| | `open-the-change` | | `sync-docs` |
-| | `track-status` | | `update-source-of-truth` |
+| | `plan-the-work` | `check-prior-art` | `source-change-gate` |
+| | `implement-the-change` | `automate-or-runbook` | `source-sync-gate` |
+| | `open-the-change` | | `parity-gate` |
+| | `track-status` | | `sync-docs` |
+| | | | `update-source-of-truth` |
 
 A backend-only repo with one deploy target might adopt the first ten plus `sync-docs`; a multi-platform app with a design source adopts the gates too. Pick what fits.
+
+The four gates — `review-gate` (spec → implementation), `source-change-gate` (the source itself changed), `source-sync-gate` (source ↔ implementation), `parity-gate` (target ↔ target) — are set up, first time or later, by the standalone **`tune-gates`** skill; `adopt-keelson` runs it for you during the interview, or invoke it on its own to add or tune a gate.
+
+## Quality gates — the `tune-gates` skill
+
+A second skill that sets up **or refines** your quality gates on their own — the CI checks that block merge, plus the verification gates (`review` · `source-change` · `source-sync` · `parity`) — without re-running the whole `adopt-keelson` interview.
+
+```mermaid
+%%{init: {"flowchart": {"diagramPadding": 18, "nodeSpacing": 36, "rankSpacing": 34}}}%%
+flowchart LR
+  A([tune-gates]) --> P[pick CI checks<br/>+ which gates fit] --> W[write / patch<br/>AGENTS.md + gate skills] --> D([gates live])
+  D -. refine later .-> A
+  classDef enter fill:#dfeee4,stroke:#2f6b4f,color:#0b1f16,stroke-width:1.5px;
+  classDef step fill:#e8eef7,stroke:#33415c,color:#0b1324,stroke-width:1px;
+  classDef done fill:#d7e3f4,stroke:#2c4a73,color:#0b1324,stroke-width:1.5px;
+  class A enter;
+  class P,W step;
+  class D done;
+  linkStyle 3 stroke:#2f6b4f,stroke-width:1.5px,stroke-dasharray:4 3;
+```
+
+**Use it:** `/keelson:tune-gates` (or *"add a gate"* / *"tune the quality gates"*) on a repo that already adopted keelson — it reads your `AGENTS.md` and changes only the delta. `adopt-keelson` also runs it for you during first-time setup.
 
 ## Layout
 
 ```
 keelson/
-├── skills/establish/              the one skill — fully self-contained
-│   ├── SKILL.md                   the establisher (interview → fill → write)
-│   ├── agents/openai.yaml         Codex metadata
-│   ├── references/tracker-notes.md per-tracker traps the establisher folds in
-│   └── templates/
-│       ├── AGENTS.client.md       the AGENTS.md substrate it writes
-│       └── lifecycle/*.md         the 16 selectable skill templates
-├── .agents/skills/establish  →    symlink to skills/establish (Codex discovery)
+├── templates/                     shared by both skills (symlinked into each)
+│   ├── AGENTS.client.md           the AGENTS.md substrate the skills write
+│   └── lifecycle/*.md             the 17 selectable skill templates
+├── references/tracker-notes.md    per-tracker traps, folded into the client AGENTS.md
+├── skills/
+│   ├── adopt-keelson/             the establisher (interview → fill → write)
+│   │   ├── SKILL.md
+│   │   ├── agents/openai.yaml     Codex metadata
+│   │   └── templates → ../../templates · references → ../../references
+│   └── tune-gates/                establish/refine the quality gates, standalone
+│       ├── SKILL.md
+│       ├── agents/openai.yaml
+│       └── templates → ../../templates · references → ../../references
+├── .agents/skills/{adopt-keelson,tune-gates} → ../../skills/…   (Codex discovery)
 ├── .claude-plugin/                Claude marketplace + plugin manifests
 └── AGENTS.md  README.md  LICENSE
 ```
 
-Everything the skill needs at runtime lives **inside `skills/establish/`** — a plugin ships the skill folder, so nothing it reads may sit at the repo root.
+The lifecycle templates and tracker notes live **once** at the plugin root; each skill folder symlinks them in, so a skill reads `templates/…` as if local while the source keeps a single copy.
 
-Both tools read **one physical copy** — Claude directly, Codex through the symlink:
+Two skills, **one physical copy** of the shared templates — Claude reads the plugin directly, Codex through per-skill symlinks:
 
 ```mermaid
 %%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 44, "rankSpacing": 42}}}%%
 flowchart TD
-  CC[Claude Code<br/>marketplace plugin] -->|reads skills/| D[(skills/establish/<br/>the one physical copy)]
-  CX[Codex · any SKILL.md agent] -->|reads .agents/skills/| SL[/.agents/skills/establish/]
-  SL -. symlink .-> D
+  CC[Claude Code · marketplace plugin] --> S
+  CX[Codex · any SKILL.md agent] -. per-skill symlinks .-> S
+  subgraph S [skills/]
+    direction LR
+    AK[adopt-keelson]
+    TG[tune-gates]
+  end
+  S -. templates symlink .-> T[(templates/ + references/<br/>the one physical copy)]
   classDef tool fill:#e8eef7,stroke:#33415c,color:#0b1324,stroke-width:1.5px;
-  classDef real fill:#d6ece6,stroke:#2f6b53,color:#0b1f16,stroke-width:1.5px;
-  classDef link fill:#f7e9d0,stroke:#8a5a16,color:#241a0b,stroke-width:1.5px;
+  classDef skill fill:#d6ece6,stroke:#2f6b53,color:#0b1f16,stroke-width:1.5px;
+  classDef real fill:#ece8fb,stroke:#5b4b8a,color:#1e1633,stroke-width:1.5px;
   class CC,CX tool;
-  class D real;
-  class SL link;
-  linkStyle 2 stroke:#8a5a16,stroke-width:1.5px,stroke-dasharray:4 3;
+  class AK,TG skill;
+  class T real;
+  style S fill:#eef6f2,stroke:#2f6b53,color:#0b1f16;
 ```
 
 ## The golden rule
@@ -187,7 +222,7 @@ That rule, and the engineering standards keelson carries into client repos, come
 
 ## Trackers
 
-GitHub, GitLab, Jira, and Linear ship with their non-obvious traps and bindings in [`skills/establish/references/tracker-notes.md`](skills/establish/references/tracker-notes.md); anything else with an API/CLI/MCP is handled by the *custom* path (capture how status moves, how a child links to a parent, where changes live, and the endpoint).
+GitHub, GitLab, Jira, and Linear ship with their non-obvious traps and bindings in [`references/tracker-notes.md`](references/tracker-notes.md); anything else with an API/CLI/MCP is handled by the *custom* path (capture how status moves, how a child links to a parent, where changes live, and the endpoint).
 
 ## License
 
