@@ -86,7 +86,7 @@ Thin templates plus your interview answers become your repo's own artifacts:
 ```mermaid
 %%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 40, "rankSpacing": 44}}}%%
 flowchart TD
-  T[keelson templates<br/>AGENTS substrate · 17 lifecycle · tracker-notes]
+  T[keelson templates<br/>AGENTS substrate · 17 lifecycle · 5 roles · tracker-notes]
   A[/your answers ·<br/>one round per idea/]
   T --> E(((adopt-keelson)))
   A --> E
@@ -149,7 +149,7 @@ flowchart TD
   linkStyle 1 stroke:#8a5a16,stroke-width:1.5px,stroke-dasharray:4 3;
 ```
 
-## The 17 ideas (selectable)
+## The 18 ideas (selectable)
 
 | | Core loop *(default on)* | Discipline *(default on)* | Milestone & gates *(by repo shape)* |
 |---|---|---|---|
@@ -160,10 +160,37 @@ flowchart TD
 | | `open-the-change` | | `parity-gate` |
 | | `track-status` | | `sync-docs` |
 | | | | `update-source-of-truth` |
+| | | | `delegate-roles` *(agents with subagents)* |
 
 A backend-only repo with one deploy target might adopt the first ten plus `sync-docs`; a multi-platform app with a design source adopts the gates too. Pick what fits.
 
 The four gates — `review-gate` (spec → implementation), `source-change-gate` (the source itself changed), `source-sync-gate` (source ↔ implementation), `parity-gate` (target ↔ target) — are set up, first time or later, by the standalone **`tune-gates`** skill; `adopt-keelson` runs it for you during the interview, or invoke it on its own to add or tune a gate.
+
+## Delegation — when your agent runs subagents
+
+`delegate-roles` writes five role definitions: **loop-runner** (owns one work item to a green, gated change and never merges), **gate-reviewer**, **scout**, **gate-runner** and **change-watcher**. The main session becomes the orchestrator: it picks, frames, merges and closes.
+
+The catch it solves: **a subagent can't ask you.** Left alone it picks a default and footnotes it in the PR — the strategic call surfaces at review, which is exactly the late drift keelson exists to stop. So escalation is a contract: the subagent stops and returns `ESCALATE`, the orchestrator asks you, then resumes the *same* agent with your answer.
+
+```mermaid
+%%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 40, "rankSpacing": 38}}}%%
+flowchart TD
+  M([orchestrator · pick, frame]) --> L[loop-runner · plan → implement → open → gates]
+  L -- green, gated --> C[orchestrator · merge, recap, close]
+  L -. strategic call · ESCALATE .-> H[/you decide/]
+  H -. answer · resume same agent .-> L
+  classDef step fill:#e8eef7,stroke:#33415c,color:#0b1324,stroke-width:1px;
+  classDef enter fill:#dfeee4,stroke:#2f6b4f,color:#0b1f16,stroke-width:1.5px;
+  classDef done fill:#d7e3f4,stroke:#2c4a73,color:#0b1324,stroke-width:1.5px;
+  classDef human fill:#f7e9d0,stroke:#8a5a16,color:#241a0b,stroke-width:1.5px;
+  class L step;
+  class M enter;
+  class C done;
+  class H human;
+  linkStyle 2,3 stroke:#8a5a16,stroke-width:1.5px,stroke-dasharray:4 3;
+```
+
+Roles carry the contract only — models are tiers you map at adoption (and the reviewer can sit on a different model than the implementer, so stacked judgment doesn't share one blind spot). No subagents in your agent → skip the idea; the skills run inline unchanged.
 
 ## Quality gates — the `tune-gates` skill
 
@@ -191,7 +218,8 @@ flowchart LR
 keelson/
 ├── templates/                     shared by both skills (symlinked into each)
 │   ├── AGENTS.client.md           the AGENTS.md substrate the skills write
-│   └── lifecycle/*.md             the 17 selectable skill templates
+│   ├── lifecycle/*.md             the 17 selectable skill templates
+│   └── agents/*.md                the 5 delegate-roles definitions
 ├── references/tracker-notes.md    per-tracker traps, folded into the client AGENTS.md
 ├── skills/
 │   ├── adopt-keelson/             the establisher (interview → fill → write)

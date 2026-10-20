@@ -18,8 +18,12 @@ close**. Two modes inside it:
   test, open the {{change}}, move status) need no permission; just do them and chain.
 - **Strategic human loop** — the moment a move touches the **original design,
   strategy, or plan** (new dependency, a decision worth an ADR, scope split,
-  ambiguity, a deviation from the source of truth), **stop and ask**. See
+  ambiguity, a deviation from the source of truth), **escalate**. See
   *When in doubt*.
+
+**Escalate** = ask the user. A delegated subagent can't, so it stops and returns
+`ESCALATE` to the orchestrator, which asks (§10). The skills say "escalate" and mean
+whichever applies to you.
 
 ## 2 · Vocabulary & tracker
 
@@ -101,6 +105,30 @@ Post-change verification beyond CI:
 Ask — don't invent, don't silently choose. Precedence: **this file** > the more
 specific doc > a general one. If you must move to keep momentum, pick the
 conservative option and record the assumption on the {{issue}} so it can be ratified.
+
+## 10 · Delegation <!-- keep if delegate-roles adopted -->
+
+The skills are shared by the main session and its subagents; this section says **who**
+runs them. Role definitions live in `{{agents_dir}}`.
+
+| Role | Runs | Hands back |
+|---|---|---|
+| **Main — orchestrator** | pick-next-work, frame-the-change, escalations, merge, track-status close-out, close-a-milestone | the recap; every call that is the user's |
+| **loop-runner** | plan-the-work → implement-the-change → open-the-change → gates | a green, gated {{change}} or `ESCALATE` — never merges |
+| **gate-reviewer** | one adopted gate, on a fresh context | findings |
+| **scout · gate-runner · change-watcher** | no lifecycle skills | compact records; never decide |
+
+- **Delegate code work by default** — one loop-runner per {{issue}}; parallel ones own
+  disjoint files and each dispatch names its siblings. Main works inline only on:
+  {{inline_exceptions}}.
+- **Escalation contract.** A subagent can't ask the user or message main mid-run. It stops
+  and returns `ESCALATE: {question, options, recommendation, blocked step}`; main asks,
+  then resumes the *same* agent with the answer (its context survives). A tactical,
+  reversible choice isn't an escalation — take the conservative option and record it on
+  the {{issue}} (§9). **Never park a strategic call as a {{change}}-body footnote** — that
+  is drift surfacing late, the thing this loop exists to stop.
+- **Review on a different model where you can.** Stacked judgment on one model shares
+  its blind spots; gate-reviewer runs on {{model.reviewer}}.
 
 ## Tracker notes
 

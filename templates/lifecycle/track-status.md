@@ -4,8 +4,8 @@ description: >-
   Activate at each lifecycle moment that moves an {{issue}}'s state, and after any unit
   of work finishes — including admin/infra ops that bypass a {{change}} (CLI calls,
   console clicks). Sets the {{status_field}} and, at close, ticks acceptance with
-  evidence. plan-the-work and open-the-change call this; pick-next-work does not chain
-  from it.
+  evidence. Also owns the merge + recap once a {{change}} is green and gated.
+  plan-the-work and open-the-change call this; pick-next-work does not chain from it.
 ---
 
 The {{board}}'s {{status_field}} is the source of truth for where an {{issue}} stands —
@@ -24,6 +24,21 @@ Set `{{status_field}}` at the moment the state changes, not in a batch afterward
 
 Omit any column this repo doesn't use. If no column matches the lifecycle moment, add
 one on the {{board}} rather than forcing the closest wrong one.
+
+## Merge and recap
+When the {{change}} is green and its gates have settled, merge per `{{merge_style}}`. Watch
+CI on `{{default_branch}}` to terminal, plus any downstream workflow the merge triggered
+(release, deploy). Then remove the {{isolation}}.
+
+End with a **chat recap** (not in the {{change}} body) — the user is deciding whether to
+dig in, so make it a scannable index, not a narrative:
+- The {{change}} URL on its own line.
+- One sentence on *why* the change exists.
+- Bulleted moving pieces, each anchored to a file/component path, one tight line each.
+- Follow-ups, deferred scope, or merge risks — only if any.
+
+Markdown bullets + `backticked paths`, no headings/tables, ~150 words. A delegated
+loop-runner's `DONE` report is the raw material; the recap is yours.
 
 ## Close out — only with evidence
 The {{change}}-merge moment is the obvious trigger. The one that gets *missed*: admin or

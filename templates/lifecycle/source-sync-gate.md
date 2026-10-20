@@ -43,7 +43,7 @@ states present and named, same shapes and constraints, same meaning.
    - **Escalate** — structural mismatch: a field / state / shape in the source absent from
      the implementation or vice-versa, a renamed or relocated element, anything that would
      warrant changing the {{source_of_truth}} or an {{adr_dir}} entry. Stop, quote both
-     sides + the divergence, ask. No merge until acked.
+     sides + the divergence, escalate. No merge until acked.
    - The **source** itself looks wrong → an update-source-of-truth matter, not a fix you
      make here. Escalate.
    - Unsure which bucket → **escalate** (respond-to-uncertainty).
