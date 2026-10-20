@@ -2,13 +2,11 @@
 name: open-the-change
 description: >-
   Activate after implement-the-change, when you're ready to open the {{change}}.
-  Opens it, links the {{issue}} in the body, watches CI to green, then chains into
-  review-gate / source-sync-gate before the chat recap. Distinct from track-status,
-  which only moves the {{issue}} across `{{status_field}}`.
+  Opens it, links the {{issue}} in the body, watches CI to green, runs the adopted
+  gates, and stops there. Merge, recap and close-out are track-status's.
 ---
 
-Implementation is done. Open the {{change}}, prove it green, hand back a recap the user
-can scan. Tracker bindings (open, link, set status, merge) live in `AGENTS.md` → Tracker
+Implementation is done. Open the {{change}} and prove it green and gated. Tracker bindings (open, link, set status, merge) live in `AGENTS.md` → Tracker
 notes — name the action here, run them there.
 
 ## Open
@@ -31,10 +29,8 @@ notes — name the action here, run them there.
   isn't a one-line typo (timeout, flake, async/scheduler interaction — any failure whose
   mechanism is unclear), reproduce it locally before the next push. Can't reproduce →
   comment with logs and ask; never blind-push-retry.
-- **Watch CI to terminal before handing back** — after open, after merge, and after any
-  direct push to `{{default_branch}}`. For merges/pushes, follow the chain into any
-  downstream workflow the push triggered (release, deploy) and watch that to terminal
-  too. Never report "done" while checks are pending or red.
+- **Watch CI to terminal before handing back** — after open and after every push to the
+  {{change}}. Never report "done" while checks are pending or red.
 
 ## Gate, then flip
 - CI green → chain the adopted gates before the recap: a reviewable artifact → **review-gate**;
@@ -45,22 +41,6 @@ notes — name the action here, run them there.
   **{{status.in_progress}}** if that's where your board parks open changes) via
   track-status.
 
-## Recap, then merge
-End with a **chat recap** (not in the {{change}} body) — the user is deciding whether to
-dig in, so make it a scannable index, not a narrative:
-- The {{change}} URL on its own line.
-- One sentence on *why* the change exists.
-- Bulleted moving pieces, each anchored to a file/component path, one tight line each.
-- Follow-ups, deferred scope, or merge risks — only if any.
-
-Markdown bullets + `backticked paths`, no headings/tables, ~150 words.
-
-Merge per `{{merge_style}}`. After merge the {{change}} closes the linked {{issue}};
-chain into track-status to confirm it flipped to **{{status.done}}** — the recap is a
-checkpoint inside the cycle, not its end.
-
-*When {{isolation}} is a worktree:* after merge, remove the worktree **before** deleting
-the local branch (the branch is still checked out in it, so order matters), returning the
-primary checkout to a clean `{{default_branch}}` for pick-next-work.
-
-*(Open / link / set status / merge bindings live in `AGENTS.md` → Tracker notes.)*
+## Done here
+CI green and the gates settled → stop. The merge, the recap and the close-out belong to
+track-status — the orchestrator's moves when the loop is delegated (`AGENTS.md` §10).

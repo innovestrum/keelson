@@ -68,10 +68,18 @@ establisher carries into client repos.
 
 ## When changing the lifecycle pack
 
+- **Templates are actor-neutral.** The main session and delegated subagents run the same
+  skills, so a template says *escalate* (never "ask the user" / "stop and ask in chat"),
+  and orchestrator moves — merge, recap, close-out — live in `track-status`, not in the
+  steps a loop-runner runs. Who-does-what is `AGENTS.client.md` §10, written once.
+- **Role templates (`templates/agents/`) carry the contract only** — job, return shape,
+  escalation, model as a tier placeholder. Commands and toolchain traps stay in the
+  client `AGENTS.md` (§3, Tracker notes), never in a role file.
+
 - Keep each template a **thin** port of its cruiso origin — the discipline, not the
   Cruiso-specific detail. If a placeholder isn't a repo convention, it doesn't
   belong; push tracker mechanics to `tracker-notes.md`.
-- The 17 ideas are **selectable**: a client may adopt the 7 core-loop skills and
+- The 18 ideas are **selectable**: a client may adopt the 7 core-loop skills and
   none of the gates. Each template must read sensibly on its own and defer to the
   client `AGENTS.md` for anything configurable.
 - **The four gates are a family** — `review-gate` (spec → implementation),

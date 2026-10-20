@@ -97,6 +97,11 @@ for a complex one.
   doc conflicts; ask vs. proceed-conservatively.
 - **H3 · Follow-ups, prior-art, ops** (`carve-out-followup`, `check-prior-art`,
   `automate-or-runbook`) — adopt each?
+- **H4 · Delegation** (`delegate-roles`) — does their agent run subagents (Claude Code
+  `.claude/agents/` today; anything else → skip, the skills run inline)? If yes: which
+  roles, the model per tier (`{{model.*}}`; offer a reviewer on a *different* model than
+  the implementer), `{{agents_dir}}`, and the `{{inline_exceptions}}` main keeps for
+  itself. The escalation contract (§10) is not optional once delegating — say why.
 
 **Standards & delivery**
 - **S1 · Engineering standards** — present the InnoVestrum standards embedded in
@@ -123,6 +128,10 @@ leave none unfilled.
   `{{plan_location}}`, `{{adr_dir}}` (any may be *none*)
 - **Scope / gates** — `{{size_cap}}` + `{{oversize_label}}`, `{{milestone}}`,
   `{{source_of_truth}}`, `{{target}}` / `{{targets}}`, `{{quality_gates}}` (any *none*)
+- **Delegation** (only with `delegate-roles`) — `{{agents_dir}}`, `{{inline_exceptions}}`,
+  `{{model.cheap}}` · `{{model.mid}}` · `{{model.strongest}}` · `{{model.reviewer}}` (the
+  agent's own model aliases, never pinned ids), `{{loop_skills}}` (the adopted core-loop
+  skills, comma-separated)
 
 ## 4 · Fill & write
 
@@ -134,12 +143,16 @@ leave none unfilled.
    (placeholders + frontmatter description) and write it to each client skill dir as
    `<dir>/<name>/SKILL.md`. The **gate** skills + the `§8`/`§3` substrate follow
    **tune-gates §4** — its selection (P6/O2) decides which gates are adopted; render only those.
-3. Skipped ideas → don't write the skill, don't leave its `AGENTS.md` section.
+3. **Role definitions** (`delegate-roles` adopted). Render each chosen
+   `templates/agents/<role>.md` to `{{agents_dir}}/<role>.md`, and keep `AGENTS.md` §10.
+   A role whose skills weren't adopted (gate-reviewer with no gates) isn't written.
+4. Skipped ideas → don't write the skill, don't leave its `AGENTS.md` section.
 
 ## 5 · Verify & hand back
 
 - Grep the written files for `{{` — **zero** leftover placeholders.
-- Every adopted idea has both an `AGENTS.md` section and a written skill; every written
+- Every adopted idea has both an `AGENTS.md` section and a written skill (role files for
+  `delegate-roles`); every written
   skill's `{{status.*}}` / `{{change}}` / `{{plan_location}}` etc. match the interview.
 - Recap: tracker, the SDLC pillars adopted vs. left to the user, files written, and any
   decision still flagged to revisit. Point them at the new `AGENTS.md` to read first.

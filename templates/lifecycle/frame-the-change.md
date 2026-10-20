@@ -31,9 +31,9 @@ dirty working tree.
    redirect scope; the body is what reviewers and future-you read.
 6. **Wait for acknowledgement before coding** — unless the user already said "go" in
    the same turn (that counts as ack). Tight loops are fine; a one-word ack is fine.
-7. **Continue the chain** once acked: implement-the-change → open-the-change → on
-   merge the {{issue}} closes. Verify it flipped to **{{status.done}}**; fall back to
-   track-status if it didn't.
+7. **Continue the chain** once acked: implement-the-change → open-the-change →
+   track-status (merge, recap, confirm **{{status.done}}**). With delegate-roles adopted,
+   hand implement → open to a loop-runner and keep the merge and close-out (`AGENTS.md` §10).
 
 Skip only for: existing-{{issue}} work (pick-next-work → plan-the-work); throwaway
 exploration the user framed as untracked; a one-character fix already approved

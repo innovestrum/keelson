@@ -33,9 +33,9 @@ rewrite.
      implement-the-change this same turn. Don't wait for an explicit "go".
    - **Strategic** (any bullet carries an open question, a new dependency, an ADR still
      *Proposed*, a deviation from `{{source_of_truth}}`, a scope split, or an unresolved
-     ambiguity from respond-to-uncertainty) → **stop and ask in chat, quoting the
+     ambiguity from respond-to-uncertainty) → **stop and escalate, quoting the
      bullet.** Self-heal authority covers execution, never the design call.
-   - Unsure which → treat as strategic and ask. The human loop is cheap; an unwound wrong
+   - Unsure which → treat as strategic and escalate. The human loop is cheap; an unwound wrong
      direction is not.
 
 *(Where `{{plan_location}}` lives and how to write to it, plus opening the `{{isolation}}`

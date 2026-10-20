@@ -2,7 +2,7 @@
 name: implement-the-change
 description: >-
   Activate after plan-the-work posts the plan. Proceed immediately when the plan is
-  mechanical; wait for user ack only if plan-the-work flagged a strategic call (open
+  mechanical; escalate and wait for an ack only if plan-the-work flagged a strategic call (open
   question, new dependency, ADR, scope split, ambiguity). Chains to open-the-change once
   the work is green.
 ---

@@ -29,7 +29,7 @@ gate eyeballs it against the spec **before** merge. Single-{{change}}, one direc
    - **Escalate** — structural deviation: a shape/flow/field the spec doesn't define, a
      renamed or relocated primary action, anything that would warrant an ADR or a
      change to `{{source_of_truth}}`. Stop, quote the artifact + the rule it breaks,
-     ask. No merge until acked.
+     escalate. No merge until acked.
    - Unsure which bucket → **escalate** (respond-to-uncertainty). Self-heal authority
      does not extend to design/spec decisions.
 4. **Coverage gap.** The diff adds a new surface but no artifact captures it → the gate

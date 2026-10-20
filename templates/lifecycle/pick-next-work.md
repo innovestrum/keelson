@@ -2,15 +2,14 @@
 name: pick-next-work
 description: >-
   Activate at session start with no assigned task and no in-flight {{change}}, or
-  right after track-status closes a cycle and the tree is clean on
-  `{{default_branch}}`. Distinct from frame-the-change (forms a new {{issue}} from a
+  when the user asks for the next {{issue}} — track-status never chains into it. Distinct from frame-the-change (forms a new {{issue}} from a
   user request); chains into plan-the-work.
 ---
 
 No assigned work. Claim the next {{issue}} from the backlog — don't invent one, and
 don't start from a dirty tree.
 
-1. **Precondition: clean tree on `{{default_branch}}`.** Dirty tree → ask the user
+1. **Precondition: clean tree on `{{default_branch}}`.** Dirty tree → escalate
    (commit / stash / discard); wrong branch → switch and fast-forward. Picking off a
    half-done tree strands the previous work.
 2. **Pick by the backlog rule** in `AGENTS.md` — the repo's documented ordering over
@@ -21,10 +20,11 @@ don't start from a dirty tree.
    it's not actually ready, defer it and take the next; claiming a blocked {{issue}}
    just parks it under your name.
 4. **Claim it** — assign yourself and set `{{status_field}}` → **{{status.in_progress}}**.
-5. **Chain into plan-the-work in the same turn** — picking is mechanical, no ack
+5. **Chain into plan-the-work in the same turn** (or hand the {{issue}} to a loop-runner
+   when delegate-roles is adopted, `AGENTS.md` §10) — picking is mechanical, no ack
    needed. Stop only if a precondition above fails.
 
-Backlog empty, or every candidate taken / blocked → **ask the user**. Don't fabricate
+Backlog empty, or every candidate taken / blocked → **escalate**. Don't fabricate
 work or pull something out of order to have something to do.
 
 *(Reading open/unassigned state, the ordering, assigning, and setting status is in

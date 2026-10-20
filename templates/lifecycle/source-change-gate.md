@@ -39,7 +39,7 @@ prove the source realizes as intended and **nothing else moved**.
      Fix on the same branch, re-realize, re-read. Note what you healed.
    - **Escalate — collateral drift** (the high-value catch): the fan-out shows an *unrelated*
      element changed, or the edit contradicts the brief / warrants an `{{adr_dir}}` entry. Stop,
-     quote the drifted element + the intended edit, ask. No merge until acked.
+     quote the drifted element + the intended edit, escalate. No merge until acked.
    - Unsure which bucket → **escalate** (respond-to-uncertainty).
 4. **Coverage gap.** The diff adds a source element nothing realizes (no view / generator path
    for it) → note it; extend the realization path in this {{change}} or carve-out-followup.
