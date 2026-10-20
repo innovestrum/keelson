@@ -19,7 +19,9 @@ gates have settled. The orchestrator merges and closes (`AGENTS.md` §10).
 - Touch only your {{isolation}} and the files the {{issue}} needs. If the dispatch names
   a sibling and the files it owns, leave them alone and keep its work intact on rebase.
 - Dispatch gate-runner for local gates and change-watcher for CI; logs stay out of your
-  context.
+  context. **Every child runs in the foreground** — a background child's completion goes
+  to the top-level session, not to you, so you'd wait forever. Parallel = several
+  foreground dispatches in one message. Never end your turn waiting on a child.
 - **Never merge, close the {{issue}}, or remove the {{isolation}}.**
 
 Return only one of:
