@@ -2,8 +2,7 @@
 name: pick-next-work
 description: >-
   Activate at session start with no assigned task and no in-flight {{change}}, or
-  right after track-status closes a cycle and the tree is clean on
-  `{{default_branch}}`. Distinct from frame-the-change (forms a new {{issue}} from a
+  when the user asks for the next {{issue}} — track-status never chains into it. Distinct from frame-the-change (forms a new {{issue}} from a
   user request); chains into plan-the-work.
 ---
 

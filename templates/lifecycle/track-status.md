@@ -26,7 +26,9 @@ Omit any column this repo doesn't use. If no column matches the lifecycle moment
 one on the {{board}} rather than forcing the closest wrong one.
 
 ## Merge and recap
-When the {{change}} is green and its gates have settled, merge per `{{merge_style}}`. Watch
+When the {{change}} is green and its gates have settled, first surface every ack the
+hand-back lists (a gate's confirm-with-author item, the body's open questions) and wait
+for it. Then merge per `{{merge_style}}`. Watch
 CI on `{{default_branch}}` to terminal, plus any downstream workflow the merge triggered
 (release, deploy). Then remove the {{isolation}}.
 
