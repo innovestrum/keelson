@@ -127,6 +127,9 @@ runs them. Role definitions live in `{{agents_dir}}`.
   reversible choice isn't an escalation — take the conservative option and record it on
   the {{issue}} (§9). **Never park a strategic call as a {{change}}-body footnote** — that
   is drift surfacing late, the thing this loop exists to stop.
+- **Nested dispatch is foreground-only.** A background child reports to the top-level
+  session, not to the subagent that dispatched it. Background dispatch is main's alone;
+  a notification for an agent main didn't dispatch gets forwarded to its dispatcher.
 - **Review on a different model where you can.** Stacked judgment on one model shares
   its blind spots; gate-reviewer runs on {{model.reviewer}}.
 
