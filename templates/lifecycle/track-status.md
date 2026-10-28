@@ -5,7 +5,7 @@ description: >-
   of work finishes — including admin/infra ops that bypass a {{change}} (CLI calls,
   console clicks). Sets the {{status_field}} and, at close, ticks acceptance with
   evidence. Also owns the merge + recap once a {{change}} is green and gated.
-  plan-the-work and open-the-change call this; pick-next-work does not chain from it.
+  plan-the-work and open-the-change call this; it never starts run-the-milestone.
 ---
 
 The {{board}}'s {{status_field}} is the source of truth for where an {{issue}} stands —
@@ -26,11 +26,22 @@ Omit any column this repo doesn't use. If no column matches the lifecycle moment
 one on the {{board}} rather than forcing the closest wrong one.
 
 ## Merge and recap
-When the {{change}} is green and its gates have settled, first surface every ack the
-hand-back lists (a gate's confirm-with-author item, the body's open questions) and wait
-for it. Then merge per `{{merge_style}}`. Watch
-CI on `{{default_branch}}` to terminal, plus any downstream workflow the merge triggered
-(release, deploy). Then remove the {{isolation}}.
+When the {{change}} is green and its gates have settled:
+- **Merge yourself, unless it needs an ack first** — then ask (batched in the ledger) and
+  merge on the answer: the hand-back lists ack items (an artifact to judge — pass its link
+  and the region in words, never open the image yourself — or the body's open questions), an
+  ADR is *Proposed*, the diff touches `{{frozen_paths}}`, or the user asked to review it.
+- **You are the doc-update reviewer** (`AGENTS.md` §5): map the diff's areas to the docs
+  they should touch, compare with the hand-back's docs list; a gap goes back to the
+  implementer before merge, not into a follow-up.
+- **Merge per `{{merge_style}}` as its own step.** Clean up, comment or close only after the
+  tracker reports the {{change}} merged — a cleanup chained after a rejected merge removes
+  the {{isolation}} and posts a false "shipped". Then remove the {{isolation}}.
+- **Watch `{{default_branch}}` once per merge batch** ("up to <sha>"), plus any downstream
+  workflow it triggered — not once per {{change}}; same after a direct push.
+- The auto-close keyword should flip the {{issue}} — verify its state, else set it.
+- Merged work CI can't verify (a device, a manual check) → its box stays open with
+  `{{needs_user_label}}`.
 
 End with a **chat recap** (not in the {{change}} body) — the user is deciding whether to
 dig in, so make it a scannable index, not a narrative:
@@ -59,9 +70,9 @@ rotation). Run this explicitly after those — nothing else will.
    failure mode this guards against.
 
 ## Stop at the cycle boundary
-Once the {{issue}} is set/closed and any monitoring is done, confirm in one line and hand
-back. **Do not** chain into pick-next-work — picking the next {{issue}} is a deliberate
-act the user initiates, not a default tail.
+Once the {{issue}} is set/closed and monitoring is done, the recap (or one line, with no
+{{change}}) is the hand-back. Inside a live run-the-milestone run, return to its hand-back
+steps; outside one, stop — the next cycle starts when the user asks.
 
 *(Which columns exist, how to set them, and how to close an {{issue}} with its acceptance
 is in `AGENTS.md` → Tracker notes — name the move here, run the tracker's own commands

@@ -77,8 +77,13 @@ for a complex one.
   pre-run before opening), with a local-verify carve-out during red-CI debugging.
 - **P7 · Status flow** (`track-status`) — when status moves and who moves it; board vs.
   labels as source of truth; close only with cited evidence.
-- **P8 · Pick-up rule** (`pick-next-work`) — the backlog/priority ordering for claiming
-  the next {{issue}}.
+- **P8 · Coordinator & queue** (`run-the-milestone`) — how the next {{issue}} is chosen
+  and the backlog kept placed: the queue mechanism + values (a priority field, labels, the
+  tracker's native priority) → `{{priority_field}}`, `{{priority.*}}`; how a dependency is
+  recorded → `{{dependency_link}}`; the parking buckets → `{{backlog_bucket}}` (unsure /
+  later) + `{{buckets}}` (e.g. next major); the labels for "waits on the user" and
+  "awaits triage" → `{{needs_user_label}}`, `{{triage_label}}`. Default bindings per
+  tracker are in `references/tracker-notes.md` → *Queue*.
 
 **Optional families — propose only what D1 surfaced; adopt or skip with the user**
 - **O1 · Milestones / releases** (`close-a-milestone`) — stages / milestones / epics /
@@ -92,7 +97,10 @@ for a complex one.
 
 **Discipline — the human loop**
 - **H1 · Tactical vs. strategic boundary** — *the crux.* Have the user draw the line:
-  which moves the agent does autonomously vs. must escalate for acknowledgement.
+  which moves the agent does autonomously vs. must escalate for acknowledgement; which
+  paths are frozen, so a {{change}} touching them merges only on an ack →
+  `{{frozen_paths}}`; and the language questions reach them in →
+  `{{question_language}}`.
 - **H2 · Uncertainty & precedence** (`respond-to-uncertainty`) — resolving ambiguity and
   doc conflicts; ask vs. proceed-conservatively.
 - **H3 · Follow-ups, prior-art, ops** (`carve-out-followup`, `check-prior-art`,
@@ -101,7 +109,12 @@ for a complex one.
   `.claude/agents/` today; anything else → skip, the skills run inline)? If yes: which
   roles, the model per tier (`{{model.*}}`; offer a reviewer on a *different* model than
   the implementer), `{{agents_dir}}`, and the `{{inline_exceptions}}` main keeps for
-  itself. The escalation contract (§10) is not optional once delegating — say why.
+  itself. The escalation contract (§10) is not optional once delegating — say why. Then
+  the coordinator's dispatch sizing: how many loop-runners in parallel →
+  `{{parallel_cap}}` (start low, e.g. 3); the collision hot spots no two may share →
+  `{{hot_spots}}` (string catalogues, an ADR index, shared contracts, dependency
+  catalogues, lockfiles). Offer the researcher role and product-quorum when changes
+  routinely need data or a product call before code.
 
 **Standards & delivery**
 - **S1 · Engineering standards** — present the InnoVestrum standards embedded in
@@ -127,11 +140,15 @@ leave none unfilled.
 - **Docs / decisions** — `{{docs_system}}` (in-repo / wiki / mixed), `{{docs_root}}`,
   `{{plan_location}}`, `{{adr_dir}}` (any may be *none*)
 - **Scope / gates** — `{{size_cap}}` + `{{oversize_label}}`, `{{milestone}}`,
-  `{{source_of_truth}}`, `{{target}}` / `{{targets}}`, `{{quality_gates}}` (any *none*)
+  `{{source_of_truth}}`, `{{target}}` / `{{targets}}`, `{{quality_gates}}`,
+  `{{frozen_paths}}` (any *none*)
+- **Queue** — `{{priority_field}}`, `{{priority.now}}` · `{{priority.next}}` ·
+  `{{priority.later}}`, `{{dependency_link}}`, `{{backlog_bucket}}`, `{{buckets}}`,
+  `{{needs_user_label}}`, `{{triage_label}}`; `{{question_language}}`
 - **Delegation** (only with `delegate-roles`) — `{{agents_dir}}`, `{{inline_exceptions}}`,
   `{{model.cheap}}` · `{{model.mid}}` · `{{model.strongest}}` · `{{model.reviewer}}` (the
   agent's own model aliases, never pinned ids), `{{loop_skills}}` (the adopted core-loop
-  skills, comma-separated)
+  skills, comma-separated), `{{parallel_cap}}`, `{{hot_spots}}`
 
 ## 4 · Fill & write
 
@@ -146,6 +163,8 @@ leave none unfilled.
 3. **Role definitions** (`delegate-roles` adopted). Render each chosen
    `templates/agents/<role>.md` to `{{agents_dir}}/<role>.md`, and keep `AGENTS.md` §10.
    A role whose skills weren't adopted (gate-reviewer with no gates) isn't written.
+   `product-quorum` is part of this idea: render it with the lifecycle skills only when
+   delegating — its independent views need separate contexts.
 4. Skipped ideas → don't write the skill, don't leave its `AGENTS.md` section.
 
 ## 5 · Verify & hand back

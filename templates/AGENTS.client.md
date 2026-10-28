@@ -40,6 +40,8 @@ whichever applies to you.
   e.g. `Closes #<n>`), and uses the title format **`{{change_title_format}}`**.
 - Merge style: **{{merge_style}}**.
 - Required green checks before merge: **{{quality_gates}}**.
+- Frozen paths — a {{change}} touching them merges only on the user's ack:
+  **{{frozen_paths}}**.
 - **Size is a conversation trigger, not a target.** Past ~{{size_cap}} added lines,
   split separable concerns into linked {{issues}}; if the work is one cohesive thing
   (a sweeping rename, a vendored import, an ADR adoption), label it
@@ -53,6 +55,14 @@ planning → **{{status.planning}}**, work opens → **{{status.in_progress}}**,
 {{change}} up for review → **{{status.in_review}}**, merged & criteria met →
 **{{status.done}}**; blocked → **{{status.blocked}}**, dropped →
 **{{status.deferred}}**. Tick acceptance boxes only with cited evidence.
+
+- **Queue:** `{{priority_field}}` — `{{priority.now}}` → `{{priority.next}}` →
+  `{{priority.later}}`. **Dependencies:** {{dependency_link}}. Every {{issue}} carries a
+  status and a priority from the moment it's filed.
+- **Buckets** (parking parents, never worked as the active {{milestone}}):
+  `{{backlog_bucket}}` for "later / unsure", plus {{buckets}}.
+- **Labels:** `{{needs_user_label}}` = waits on the user; `{{triage_label}}` = awaits
+  placement by the coordinator.
 
 ## 5 · Docs & decisions
 
@@ -113,20 +123,32 @@ runs them. Role definitions live in `{{agents_dir}}`.
 
 | Role | Runs | Hands back |
 |---|---|---|
-| **Main — orchestrator** | pick-next-work, frame-the-change, escalations, merge, track-status close-out, close-a-milestone | the recap; every call that is the user's |
-| **loop-runner** | plan-the-work → implement-the-change → open-the-change → gates | a green, gated {{change}} or `ESCALATE` — never merges |
+| **Main — orchestrator** | run-the-milestone (sweep, triage, dispatch, re-plan), frame-the-change, escalations, merge, track-status close-out, close-a-milestone, product-quorum | the recap and end-of-run summary; every call that is the user's |
+| **loop-runner** | plan-the-work → implement-the-change → open-the-change → gates | a green, gated {{change}} + `follow-ups` + `blockers found`, or `ESCALATE` — never merges |
+| **researcher** | analysis before code, on the {{issue}} it's handed | a proposal + evidence + open questions; no edits, {{change}}s or tracker writes |
 | **gate-reviewer** | one adopted gate, on a fresh context | findings |
 | **scout · gate-runner · change-watcher** | no lifecycle skills | compact records; never decide |
 
-- **Delegate code work by default** — one loop-runner per {{issue}}; parallel ones own
-  disjoint files and each dispatch names its siblings. Main works inline only on:
-  {{inline_exceptions}}.
+- **Delegate code work by default** — one loop-runner per {{issue}}, up to
+  **{{parallel_cap}}** in parallel on disjoint files, each dispatch naming its siblings.
+  **Collision hot spots** — never two in flight on one: {{hot_spots}}. Main works inline
+  only on: {{inline_exceptions}}.
+- **Resume a runner only** for its escalation answer or a pre-merge fix. The next stacked
+  {{change}}, a post-merge rebase or a follow-up is a fresh dispatch: a long-lived context
+  costs more than a short brief.
 - **Escalation contract.** A subagent can't ask the user or message main mid-run. It stops
   and returns `ESCALATE: {question, options, recommendation, blocked step}`; main asks,
   then resumes the *same* agent with the answer (its context survives). A tactical,
   reversible choice isn't an escalation — take the conservative option and record it on
   the {{issue}} (§9). **Never park a strategic call as a {{change}}-body footnote** — that
   is drift surfacing late, the thing this loop exists to stop.
+- **Asking the user:** in the main chat, in {{question_language}}, plain words — question,
+  options, recommendation. Batch every open question into one numbered ledger
+  (run-the-milestone), never one message per agent; mirror each on its {{issue}} with
+  `{{needs_user_label}}`.
+- **Main never opens a screenshot or image artifact.** It links it, names the region in
+  words, and asks scout to describe one it must judge — images are the costliest thing to
+  keep in a long-running context.
 - **Nested dispatch is foreground-only.** A background child reports to the top-level
   session, not to the subagent that dispatched it. Background dispatch is main's alone;
   a notification for an agent main didn't dispatch gets forwarded to its dispatcher.

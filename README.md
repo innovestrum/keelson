@@ -31,7 +31,7 @@ flowchart TD
   S([enter · a change request<br/>or the next backlog item]) --> F
   F[frame] --> P[plan] --> I[implement] --> O[open change] --> G{{gate}} --> C[close]
   C --> D([done · merged, status set,<br/>handed back])
-  D -. you start the next .-> S
+  D -. next item · coordinator or you .-> S
   P -. strategic call .-> H[/escalate to human/]
   G -. structural drift .-> H
   H -. redirect .-> P
@@ -86,7 +86,7 @@ Thin templates plus your interview answers become your repo's own artifacts:
 ```mermaid
 %%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 40, "rankSpacing": 44}}}%%
 flowchart TD
-  T[keelson templates<br/>AGENTS substrate · 17 lifecycle · 5 roles · tracker-notes]
+  T[keelson templates<br/>AGENTS substrate · 18 lifecycle · 6 roles · tracker-notes]
   A[/your answers ·<br/>one round per idea/]
   T --> E(((adopt-keelson)))
   A --> E
@@ -154,13 +154,13 @@ flowchart TD
 | | Core loop *(default on)* | Discipline *(default on)* | Milestone & gates *(by repo shape)* |
 |---|---|---|---|
 | | `frame-the-change` | `respond-to-uncertainty` | `close-a-milestone` |
-| | `pick-next-work` | `carve-out-followup` | `review-gate` |
+| | `run-the-milestone` | `carve-out-followup` | `review-gate` |
 | | `plan-the-work` | `check-prior-art` | `source-change-gate` |
 | | `implement-the-change` | `automate-or-runbook` | `source-sync-gate` |
 | | `open-the-change` | | `parity-gate` |
 | | `track-status` | | `sync-docs` |
 | | | | `update-source-of-truth` |
-| | | | `delegate-roles` *(agents with subagents)* |
+| | | | `delegate-roles` *(agents with subagents; adds `product-quorum`)* |
 
 A backend-only repo with one deploy target might adopt the first ten plus `sync-docs`; a multi-platform app with a design source adopts the gates too. Pick what fits.
 
@@ -168,15 +168,15 @@ The four gates — `review-gate` (spec → implementation), `source-change-gate`
 
 ## Delegation — when your agent runs subagents
 
-`delegate-roles` writes five role definitions: **loop-runner** (owns one work item to a green, gated change and never merges), **gate-reviewer**, **scout**, **gate-runner** and **change-watcher**. The main session becomes the orchestrator: it picks, frames, merges and closes.
+`delegate-roles` writes six role definitions: **loop-runner** (owns one work item to a green, gated change and never merges), **researcher** (a decided, evidence-backed proposal before anyone codes), **gate-reviewer**, **scout**, **gate-runner** and **change-watcher**. The main session becomes the coordinator: `run-the-milestone` keeps up to N loop-runners busy on disjoint files, triages their follow-ups, merges what's green, and batches every open question into one numbered ledger you answer as "1a 2b". `product-quorum` adds a product-lead × engineer review — independent views, cross-examination, rebuttal, consensus — for calls that need both before code.
 
 The catch it solves: **a subagent can't ask you.** Left alone it picks a default and footnotes it in the PR — the strategic call surfaces at review, which is exactly the late drift keelson exists to stop. So escalation is a contract: the subagent stops and returns `ESCALATE`, the orchestrator asks you, then resumes the *same* agent with your answer.
 
 ```mermaid
 %%{init: {"flowchart": {"diagramPadding": 22, "nodeSpacing": 40, "rankSpacing": 38}}}%%
 flowchart TD
-  M([orchestrator · pick, frame]) --> L[loop-runner · plan → implement → open → gates]
-  L -- green, gated --> C[orchestrator · merge, recap, close]
+  M([coordinator · sweep, triage, dispatch ≤ N]) --> L[loop-runner · plan → implement → open → gates]
+  L -- green, gated --> C[coordinator · merge, recap, refill]
   L -. strategic call · ESCALATE .-> H[/you decide/]
   H -. answer · resume same agent .-> L
   classDef step fill:#e8eef7,stroke:#33415c,color:#0b1324,stroke-width:1px;
@@ -218,8 +218,8 @@ flowchart LR
 keelson/
 ├── templates/                     shared by both skills (symlinked into each)
 │   ├── AGENTS.client.md           the AGENTS.md substrate the skills write
-│   ├── lifecycle/*.md             the 17 selectable skill templates
-│   └── agents/*.md                the 5 delegate-roles definitions
+│   ├── lifecycle/*.md             the 18 selectable skill templates
+│   └── agents/*.md                the 6 delegate-roles definitions
 ├── references/tracker-notes.md    per-tracker traps, folded into the client AGENTS.md
 ├── skills/
 │   ├── adopt-keelson/             the establisher (interview → fill → write)
