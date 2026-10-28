@@ -30,7 +30,8 @@ When the {{change}} is green and its gates have settled, first surface every ack
 hand-back lists (a gate's confirm-with-author item, the body's open questions) and wait
 for it. Then merge per `{{merge_style}}`. Watch
 CI on `{{default_branch}}` to terminal, plus any downstream workflow the merge triggered
-(release, deploy). Then remove the {{isolation}}.
+(release, deploy). Watch once per merge batch, up to its last commit, not once per
+{{change}}. Then remove the {{isolation}}.
 
 End with a **chat recap** (not in the {{change}} body) — the user is deciding whether to
 dig in, so make it a scannable index, not a narrative:
