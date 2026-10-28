@@ -121,6 +121,13 @@ runs them. Role definitions live in `{{agents_dir}}`.
 - **Delegate code work by default** — one loop-runner per {{issue}}; parallel ones own
   disjoint files and each dispatch names its siblings. Main works inline only on:
   {{inline_exceptions}}.
+- **One {{issue}} per dispatch, short lives.** Resume a loop-runner only with an escalation
+  answer or a pre-merge fix. The next {{change}} of a stack, a post-merge rebase or a
+  follow-up gets a fresh dispatch with a short brief: bundled and long-resumed runs were
+  the costliest by far, because every call re-reads the whole accumulated context.
+- **Main never reads images.** It links a screenshot, names the region in words, and has
+  scout describe one it must judge. An image main reads stays in its context for the rest
+  of the run.
 - **Escalation contract.** A subagent can't ask the user or message main mid-run. It stops
   and returns `ESCALATE: {question, options, recommendation, blocked step}`; main asks,
   then resumes the *same* agent with the answer (its context survives). A tactical,
@@ -131,7 +138,18 @@ runs them. Role definitions live in `{{agents_dir}}`.
   session, not to the subagent that dispatched it. Background dispatch is main's alone;
   a notification for an agent main didn't dispatch gets forwarded to its dispatcher.
 - **Review on a different model where you can.** Stacked judgment on one model shares
-  its blind spots; gate-reviewer runs on {{model.reviewer}}.
+  its blind spots; gate-reviewer runs on {{model.reviewer}}. The same model on a fresh
+  context is the cheaper fallback.
+- **Context is the bill.** Each call re-reads the role's whole context, so:
+  - Give every role an explicit `tools:` list. An all-tools role starts about 3× larger,
+    and a missing tool silently breaks a skill step, so list what its skills use.
+  - Give long-lived roles that wait on children (loop-runner) the 1-hour prompt cache.
+    A 5-minute cache expires during a CI wait, and the next call re-writes the whole
+    context. Short leaf roles keep the default, because 1-hour writes cost more.
+- **Move a role to a cheaper tier only after calibration.** Run the cheaper model in the
+  shadow of the current one on the same inputs: a real failure, a pass, and a run that
+  can't start. Switch only if every report matches, and record the table on the
+  {{issue}}.
 
 ## Tracker notes
 

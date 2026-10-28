@@ -6,7 +6,10 @@ description: >-
   without merging. Returns ESCALATE instead of guessing on a strategic call. One per
   {{issue}}; parallel dispatches must own disjoint files.
 model: {{model.strongest}}
+tools: Agent, Bash, Read, Edit, Write, Grep, Glob, Skill
 skills: [{{loop_skills}}]
+experimental:
+  cacheTtl: 1h
 ---
 
 You own one {{issue}} end to end and stop at a {{change}} whose CI is green and whose
