@@ -4,7 +4,7 @@ description: >-
   Activate the moment the user asks for any change — "fix X", "add Y", "tweak Z", or
   anything similar in intent. Forms a tracked {{issue}} with a real plan before any
   code. Distinct from
-  pick-next-work (claims an existing {{issue}}) and plan-the-work (plans the one this
+  run-the-milestone (works existing {{issues}}) and plan-the-work (plans the one this
   skill just created).
 ---
 
@@ -23,9 +23,13 @@ dirty working tree.
 4. **Create the {{issue}}** with:
    - **Context** — what surfaces, known constraints, which recent change(s) it
      interacts with, the trade-off if any.
+   - **Value** — what the user or product gains; a feature for its own sake is not done.
    - **Out of scope** — what this explicitly does not touch.
    - **Acceptance** — checkable, user-visible outcomes (boxes).
    - **Refs** — the parent {{issue}}/{{milestone}}.
+
+   Link the parent and set status + priority in the same step (carve-out-followup values)
+   — an {{issue}} with neither is invisible on the {{board}}.
 5. **Hand to plan-the-work** — post the 3–7 bullet plan as a comment and set
    `{{status_field}}` → **{{status.planning}}**. The plan is what the user reviews to
    redirect scope; the body is what reviewers and future-you read.
@@ -33,9 +37,10 @@ dirty working tree.
    the same turn (that counts as ack). Tight loops are fine; a one-word ack is fine.
 7. **Continue the chain** once acked: implement-the-change → open-the-change →
    track-status (merge, recap, confirm **{{status.done}}**). With delegate-roles adopted,
-   hand implement → open to a loop-runner and keep the merge and close-out (`AGENTS.md` §10).
+   hand implement → open to a loop-runner and keep the merge and close-out (`AGENTS.md` §10);
+   during a live run-the-milestone run it takes a slot and passes its collision check.
 
-Skip only for: existing-{{issue}} work (pick-next-work → plan-the-work); throwaway
+Skip only for: existing-{{issue}} work (run-the-milestone → plan-the-work); throwaway
 exploration the user framed as untracked; a one-character fix already approved
 verbally this turn.
 

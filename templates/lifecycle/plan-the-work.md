@@ -2,7 +2,7 @@
 name: plan-the-work
 description: >-
   Activate immediately after the {{issue}} exists and is claimed — handed from
-  frame-the-change (it just created one) or pick-next-work (it just claimed one) —
+  frame-the-change (it just created one) or run-the-milestone (it just dispatched one) —
   before any code. Plan in the open, then chain into implement-the-change, or stop to ask
   if a strategic call surfaced.
 ---
@@ -37,6 +37,9 @@ rewrite.
      bullet.** Self-heal authority covers execution, never the design call.
    - Unsure which → treat as strategic and escalate. The human loop is cheap; an unwound wrong
      direction is not.
+   - **Needs research first** (experiments on data, a threshold sweep, comparing variants)
+     and the {{issue}} holds no researched proposal yet → escalate so the researcher runs
+     before anyone codes; implementation starts after the user picks a variant.
 
 *(Where `{{plan_location}}` lives and how to write to it, plus opening the `{{isolation}}`
 and setting status, are in `AGENTS.md` → Tracker notes — name the action here, run the

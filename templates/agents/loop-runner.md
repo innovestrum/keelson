@@ -22,11 +22,19 @@ gates have settled. The orchestrator merges and closes (`AGENTS.md` §10).
   context. **Every child runs in the foreground** — a background child's completion goes
   to the top-level session, not to you, so you'd wait forever. Parallel = several
   foreground dispatches in one message. Never end your turn waiting on a child.
+- Mechanical bookkeeping (file a follow-up, link it, set its fields, open the {{change}}) is
+  done, not offered. A follow-up you can't place → `{{backlog_bucket}}` +
+  `{{triage_label}}` (carve-out-followup).
 - **Never merge, close the {{issue}}, or remove the {{isolation}}.**
 
 Return only one of:
 
 - `DONE: {change url, changes (one file-anchored line each), acceptance evidence per
-  box, docs + ADRs touched, assumptions recorded on the {{issue}}, caveats}`
-- `ESCALATE: {question, options, recommendation, blocked step, branch state}` — the
-  orchestrator resumes you with the answer.
+  box, ack items (each artifact with its link and the region to look at, in words), docs +
+  ADRs touched, assumptions recorded on the {{issue}}, follow-ups, blockers found, caveats}`
+- `ESCALATE: {question, options, recommendation, blocked step, branch state, follow-ups,
+  blockers found}` — the orchestrator resumes you with the answer.
+
+`follow-ups` = {{issues}} you filed (number + parent, or `{{triage_label}}`). `blockers
+found` = {{issues}} that can't proceed until something else lands ({{issue}} → blocker).
+Write `none` when empty — the orchestrator triages both.

@@ -75,6 +75,8 @@ establisher carries into client repos.
 - **Role templates (`templates/agents/`) carry the contract only** — job, return shape,
   escalation, model as a tier placeholder. Commands and toolchain traps stay in the
   client `AGENTS.md` (§3, Tracker notes), never in a role file.
+- **`product-quorum` is lifecycle-shaped but belongs to `delegate-roles`** — its views need
+  separate contexts, so it isn't a 19th idea and isn't written without subagents.
 
 - Keep each template a **thin** port of its cruiso origin — the discipline, not the
   Cruiso-specific detail. If a placeholder isn't a repo convention, it doesn't

@@ -21,7 +21,7 @@ off with evidence before declaring it complete.
    (carve-out-followup); idiom differences don't.
 3. **Post the evidence as a closing note** on the {{milestone}} parent.
 4. **Open the next {{milestone}}'s planning {{change}}** only if its outline says to
-   expand on this one's close — otherwise leave the backlog to pick-next-work.
+   expand on this one's close — otherwise leave the backlog to run-the-milestone.
 5. **Run sync-docs.** A {{milestone}}'s worth of merged work + decisions tends to leave
    the prose in `{{docs_root}}` contradicting itself or the shipped reality — reconcile
    the drift in one docs {{change}}.
